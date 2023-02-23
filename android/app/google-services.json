@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1184189418",
+    "project_id": "digihow-dev",
+    "storage_bucket": "digihow-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1184189418:android:2d648015aa6fbea8800093",
+        "android_client_info": {
+          "package_name": "com.example.digi_how"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1184189418-2vaopv2b3p5n2hpfec5se4m4867t8fom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBub65OgGYCEFHz65lIrHOlUGT5QMJi0jY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1184189418-2vaopv2b3p5n2hpfec5se4m4867t8fom.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1184189418-5a6mtlbpao0hr1i5fijih4a42rq6i6nc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.digiHow"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
