@@ -1,16 +1,14 @@
 # digi_how
 
-A new Flutter project.
+GDSC KR Winter Cup
 
-## Getting Started
+## 기술 스택
 
-This project is a starting point for a Flutter application.
+-Firebase
+-Tensorflow
+-webRTC
+-Flutter
 
-A few resources to get you started if this is your first Flutter project:
+### 현재 Firebase까지만 연결해 두었습니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+추후에 Provider를 통해 MVVM 구조로 변경할 예정입니다.
