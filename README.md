@@ -11,4 +11,4 @@ GDSC KR Winter Cup
 
 ### 현재 Firebase까지만 연결해 두었습니다.
 
-추후에 Provider를 통해 MVVM 구조로 변경할 예정입니다.
+MVVM 구조
