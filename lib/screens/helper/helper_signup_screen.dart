@@ -2,27 +2,25 @@ import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/text_style.dart';
 import 'package:flutter/material.dart';
 
-class HelpeeSignUpScreen extends StatefulWidget {
-  const HelpeeSignUpScreen({super.key});
+class HelperSignUpScreen extends StatefulWidget {
+  const HelperSignUpScreen({super.key});
 
   @override
-  State<HelpeeSignUpScreen> createState() => _HelpeeSignUpScreenState();
+  State<HelperSignUpScreen> createState() => _HelperSignUpScreenState();
 }
 
-class _HelpeeSignUpScreenState extends State<HelpeeSignUpScreen> {
+class _HelperSignUpScreenState extends State<HelperSignUpScreen> {
   bool isAllFromFilled = false;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            _informationTexts(),
-            _namePhonePwFormField(),
-            const Text('helpee signup screen 입니다.')
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          _informationTexts(),
+          _namePhonePwFormField(),
+          const Text('helper signup screen 입니다.')
+        ],
       ),
     );
   }
