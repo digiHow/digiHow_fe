@@ -1,29 +1,69 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digi_how/consts/error_messages.dart';
 import 'package:digi_how/models/user_public_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserViewModel {
-  Future<bool> saveUserProfile({
-    required String name,
-    required String phoneNumber,
-    required bool gender,
-    required String phoneBrand,
-    required bool isHelpee,
-    required DateTime birthDTTM,
-  }) async {
-    bool res = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  Future<String> signUpWithEmailAndPassword(
+      {required String userEmail, required String userPassword}) async {
+    String res = ERROR;
     try {
-      DateTime now = DateTime.now();
-      UserPublicModel userPublic = UserPublicModel(
-        name: name,
-        gender: gender,
-        phoneBrand: phoneBrand,
-        isHelpee: isHelpee,
-        createdDate: now,
-        updatedDate: now,
-        lastLogin: now,
-      );
-      // UserPrivateModel userPrivate = UserPrivateModel(birthDTTM: birthDTTM, phoneNumber: phoneNumber, uid)//TODO: uid를 받으려면 먼저 로그인이나 회원가입 부터 해야함
-    } catch (err) {}
+      await _auth.createUserWithEmailAndPassword(
+          email: userEmail, password: userPassword);
+      res = SUCCESS;
+    } on FirebaseAuthException catch (err) {
+      String errCode = err.code;
+      if (errCode == EMAIL_ALREADY_IN_USE) {
+        res = '이미 존재하는 이메일입니다';
+      } else {
+        res = errCode;
+      }
+    }
     return res;
   }
-  //TODO: pw는 따로 받아야 함
+
+  String? getCurrentUserUid() {
+    if (_auth.currentUser != null) return _auth.currentUser!.uid;
+    return null;
+  }
+
+  Future<String> createUserDbWithUidAndPutPersonalInfos({
+    required String name,
+  }) async {
+    String res = ERROR;
+    String currentUserUid = _auth.currentUser!.uid;
+
+    DateTime now = DateTime.now();
+    UserPublicModel userPublic = UserPublicModel(
+      name: name,
+      createdDate: now,
+      updatedDate: now,
+      lastLogin: now,
+    );
+    await users
+        .doc(currentUserUid)
+        .set(userPublic.toMap())
+        .then((value) => res = SUCCESS)
+        .catchError((err) => res = err.message);
+    return res;
+  }
+
+  Future<String> updateUserDbWithPhoneBrand(
+      {required String phoneBrand}) async {
+    String res = ERROR;
+    String currentUserUid = _auth.currentUser!.uid;
+
+    DateTime now = DateTime.now();
+    UserPublicModel userPublic = UserPublicModel(
+        updatedDate: now, lastLogin: now, phoneBrand: phoneBrand);
+    users
+        .doc(currentUserUid)
+        .update(userPublic.toMap())
+        .then((value) => res = SUCCESS)
+        .catchError((err) => res = err.message);
+    return res;
+  }
 }

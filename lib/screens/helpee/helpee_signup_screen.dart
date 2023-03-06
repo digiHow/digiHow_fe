@@ -1,6 +1,10 @@
 import 'package:digi_how/consts/button_style.dart';
+import 'package:digi_how/consts/error_messages.dart';
 import 'package:digi_how/consts/text_style.dart';
+import 'package:digi_how/screens/helpee/helpee_add_personal_infos_screen.dart';
+import 'package:digi_how/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelpeeSignUpScreen extends StatefulWidget {
   const HelpeeSignUpScreen({super.key});
@@ -11,6 +15,9 @@ class HelpeeSignUpScreen extends StatefulWidget {
 
 class _HelpeeSignUpScreenState extends State<HelpeeSignUpScreen> {
   bool isAllFromFilled = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,9 +25,10 @@ class _HelpeeSignUpScreenState extends State<HelpeeSignUpScreen> {
         appBar: AppBar(),
         body: Column(
           children: [
+            const Text('helpee signup screen 입니다.'),
             _informationTexts(),
             _namePhonePwFormField(),
-            const Text('helpee signup screen 입니다.')
+            _nextButton(),
           ],
         ),
       ),
@@ -46,12 +54,11 @@ class _HelpeeSignUpScreenState extends State<HelpeeSignUpScreen> {
     return Column(
       children: [
         TextFormField(
-          decoration: const InputDecoration(hintText: '이름'),
+          controller: _emailController,
+          decoration: const InputDecoration(hintText: '이메일'),
         ),
         TextFormField(
-          decoration: const InputDecoration(hintText: '전화번호'),
-        ),
-        TextFormField(
+          controller: _passwordController,
           decoration: const InputDecoration(hintText: '비밀번호 (최소 8문자 이상)'),
         ),
       ],
@@ -59,9 +66,27 @@ class _HelpeeSignUpScreenState extends State<HelpeeSignUpScreen> {
   }
 
   Widget _nextButton() {
+    int isSignupSuccess = 0;
     return SizedBox(
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          //TODO: activated 되지 않았다면 입력 안되게 하기
+          UserViewModel()
+              .signUpWithEmailAndPassword(
+                userEmail: _emailController.text,
+                userPassword: _passwordController.text,
+              )
+              .then(
+                //TODO: 이메일이 이미 존재한다면 helpee add personal infos screen으로 이동해야함
+                (value) => {
+                  if (value == SUCCESS)
+                    Get.to(const HelpeeAddPersonalInfosScreen())
+                  else
+                    {print('[DEBUG]$value')}
+                },
+              );
+        }, //TODO: spinner 넣어주기
+        //TODO: 실패시 실패 원인 밑에다가 적어주기 빨간색으로
         style: isAllFromFilled
             ? MyButtonStyle.nextButtonActivated
             : MyButtonStyle.nextButtonNotActivated,
