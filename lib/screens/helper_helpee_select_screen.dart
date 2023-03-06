@@ -1,7 +1,10 @@
 import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/text_style.dart';
+import 'package:digi_how/screens/helpee/helpee_signup_screen.dart';
+import 'package:digi_how/screens/helper/helper_signup_screen.dart';
 import 'package:digi_how/widgets/header_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelperHelpeeSelectScreen extends StatelessWidget {
   const HelperHelpeeSelectScreen({super.key});
@@ -54,7 +57,9 @@ class HelperHelpeeSelectScreen extends StatelessWidget {
       margin: const EdgeInsets.all(15),
       child: TextButton(
         style: MyButtonStyle.bigButtonPrimary,
-        onPressed: () {}, //TODO: button 기능 추가해야 함
+        onPressed: () {
+          Get.to(const HelpeeSignUpScreen());
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -73,7 +78,9 @@ class HelperHelpeeSelectScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15),
       child: TextButton(
         style: MyButtonStyle.bigButtonSkyBlue,
-        onPressed: () {}, //TODO: button 기능 추가해야 함
+        onPressed: () {
+          Get.to(const HelperSignUpScreen());
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
