@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserPublicModel {
   String? name;
-  bool? gender;
   String? phoneBrand;
   bool? isHelpee;
   DateTime? createdDate;
@@ -11,7 +10,6 @@ class UserPublicModel {
 
   UserPublicModel({
     this.name,
-    this.gender,
     this.phoneBrand,
     this.isHelpee,
     this.createdDate,
@@ -39,7 +37,6 @@ class UserPublicModel {
 
     return UserPublicModel(
       name: data?['name'],
-      gender: data?['gender'],
       phoneBrand: data?['phoneBrand'],
       isHelpee: data?['isHelpee'],
       createdDate: createdDate,
@@ -51,7 +48,6 @@ class UserPublicModel {
   Map<String, dynamic> toMap() {
     return {
       if (name != null) 'name': name,
-      if (gender != null) 'gender': gender,
       if (phoneBrand != null) 'phoneBrand': phoneBrand,
       if (isHelpee != null) 'isHelpee': isHelpee,
       if (createdDate != null) 'createdDate': createdDate,

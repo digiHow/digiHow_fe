@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'NotoSansKR',
         inputDecorationTheme: MyInputDecorationTheme.greyTextField,
+        scaffoldBackgroundColor: MyColors.white,
         appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: MyColors.primary),
           shadowColor: Colors.transparent,
