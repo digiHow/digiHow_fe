@@ -25,10 +25,27 @@ class UserViewModel {
     return res;
   }
 
-  String? getCurrentUserUid() {
-    if (_auth.currentUser != null) return _auth.currentUser!.uid;
-    return null;
+  Future<String> signInWithEmailAndPassword(
+      {required String userEmail, required String userPassword}) async {
+    String res = ERROR;
+    try {
+      await _auth.signInWithEmailAndPassword(
+          email: userEmail, password: userPassword);
+
+      String currentUserUid = _auth.currentUser!.uid;
+      DateTime now = DateTime.now();
+      UserPublicModel userPublic = UserPublicModel(lastLogin: now);
+      users.doc(currentUserUid).update(userPublic.toMap());
+      res = SUCCESS;
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
+
+  //
 
   Future<String> createUserDbWithUidAndPutPersonalInfos({
     required String name,
