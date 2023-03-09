@@ -39,6 +39,10 @@ dependencies:
   flutter_riverpod: ^2.3.0
   firebase_auth: ^4.2.9
   get: ^4.6.5
+  flutter_webrtc: ^0.9.24
+  google_speech: ^2.1.2
+  sound_stream: ^0.3.0
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:
