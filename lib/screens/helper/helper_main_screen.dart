@@ -144,7 +144,8 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                               await ReservationViewModel()
                                   .updateReservationWithHelperInfos(
                                       data['roomId']);
-                              Get.to(const HelperWebrtcTestScreen());
+                              Get.to(HelperWebrtcTestScreen(
+                                  roomId: data['roomId']));
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
