@@ -1,8 +1,12 @@
 import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/colors.dart';
 import 'package:digi_how/consts/text_style.dart';
+import 'package:digi_how/screens/helpee/helpee_main_screen.dart';
+import 'package:digi_how/screens/helper/helper_main_screen.dart';
 import 'package:digi_how/view_models/user_view_model.dart';
+import 'package:digi_how/widgets/circular_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelpeeBrandSelectScreen extends StatefulWidget {
   const HelpeeBrandSelectScreen({super.key});
@@ -14,7 +18,17 @@ class HelpeeBrandSelectScreen extends StatefulWidget {
 
 class _HelpeeBrandSelectScreenState extends State<HelpeeBrandSelectScreen> {
   String selectedBrand = "";
-  final TextEditingController _brandController = TextEditingController();
+  String? username = '';
+  bool isUpdatingBrandInProcess = false;
+
+  @override
+  void initState() {
+    super.initState();
+    UserViewModel()
+        .getUserName()
+        .then((value) => setState(() => username = value));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,7 +57,6 @@ class _HelpeeBrandSelectScreenState extends State<HelpeeBrandSelectScreen> {
   }
 
   Widget _brandBtn(String brand, bool clicked) {
-    int isSignupSuccess = 0;
     return Expanded(
       child: Opacity(
         opacity: clicked ? 1 : 0.38,
@@ -117,15 +130,15 @@ class _HelpeeBrandSelectScreenState extends State<HelpeeBrandSelectScreen> {
   Widget _informationTexts() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
-          '의 휴대폰',
+          '$username의 휴대폰',
           style: MyTextStyle.CbS32W700,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           '사용하고 있는 휴대폰 브랜드를 선택하세요.',
           style: MyTextStyle.CbS18W500,
         )
@@ -133,30 +146,30 @@ class _HelpeeBrandSelectScreenState extends State<HelpeeBrandSelectScreen> {
     );
   }
 
-  Widget _brandTextField() {
-    //TODO: test를 위해 textfield로 한 것 뿐입니다. 바꿔주세요 select 버튼들로
-    return TextFormField(
-      controller: _brandController,
-      decoration: const InputDecoration(hintText: 'brand'),
-    );
-  }
-
   Widget _nextButton() {
     return Row(children: [
       Expanded(
         child: TextButton(
-          onPressed: () {
-            UserViewModel()
-                .updateUserDbWithPhoneBrand(phoneBrand: _brandController.text);
-          }, //TODO: spinner 넣어주기
-          //TODO: 실패시 실패 원인 밑에다가 적어주기 빨간색으로
+          onPressed: () async {
+            print(selectedBrand);
+            setState(() => isUpdatingBrandInProcess = true);
+            await UserViewModel()
+                .updateUserDbWithPhoneBrand(phoneBrand: selectedBrand);
+            bool isHelpee = await UserViewModel().getIsUserHelpee();
+            setState(() => isUpdatingBrandInProcess = false);
+
+            Get.to(
+                isHelpee ? const HelpeeMainScreen() : const HelperMainScreen());
+          },
           style: selectedBrand != ""
               ? MyButtonStyle.nextButtonActivated
               : MyButtonStyle.nextButtonNotActivated,
-          child: const Text(
-            '다음',
-            style: MyTextStyle.CwS18W500,
-          ),
+          child: isUpdatingBrandInProcess
+              ? const CircularIndicator(size: 22, color: MyColors.white)
+              : const Text(
+                  '다음',
+                  style: MyTextStyle.CwS18W500,
+                ),
         ),
       ),
     ]);
