@@ -1,21 +1,23 @@
-import 'package:digi_how/utils/observer_signaling.dart';
+import 'package:digi_how/utils/signaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
-class HelperWebrtcScreen extends StatefulWidget {
+class HelperObserverWebrtcScreen extends StatefulWidget {
   final String roomId;
-  const HelperWebrtcScreen({Key? key, required this.roomId}) : super(key: key);
+  const HelperObserverWebrtcScreen({Key? key, required this.roomId})
+      : super(key: key);
 
   @override
-  _HelperWebrtcScreenState createState() => _HelperWebrtcScreenState();
+  _HelperObserverWebrtcScreenState createState() =>
+      _HelperObserverWebrtcScreenState();
 }
 
-class _HelperWebrtcScreenState extends State<HelperWebrtcScreen> {
-  ObserverSignaling signaling = ObserverSignaling();
+class _HelperObserverWebrtcScreenState
+    extends State<HelperObserverWebrtcScreen> {
+  Signaling signaling = Signaling();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
   late String roomId;
-  TextEditingController textEditingController = TextEditingController(text: '');
 
   @override
   void initState() {

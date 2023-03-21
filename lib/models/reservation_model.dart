@@ -9,7 +9,8 @@ class ReservationModel {
   final Map<String, dynamic>? helpeeInfos;
   final Map<String, dynamic>? helperInfos;
   final Map<String, dynamic>? observerInfos;
-  final String? roomId;
+  final String? helperRoomId;
+  final String? observerRoomId;
   final String? callIntroduction;
 
   ReservationModel({
@@ -21,7 +22,8 @@ class ReservationModel {
     this.helpeeInfos,
     this.helperInfos,
     this.observerInfos,
-    this.roomId,
+    this.helperRoomId,
+    this.observerRoomId,
     this.callIntroduction,
   });
 
@@ -40,7 +42,8 @@ class ReservationModel {
       helpeeInfos: data?['helpeeInfos'],
       helperInfos: data?['helperInfos'],
       observerInfos: data?['observerInfos'],
-      roomId: data?['roomId'],
+      helperRoomId: data?['helperRoomId'],
+      observerRoomId: data?['observerRoomId'],
       callIntroduction: data?['callIntroduction'],
     );
   }
@@ -55,7 +58,8 @@ class ReservationModel {
       if (helpeeInfos != null) "helpeeInfos": helpeeInfos,
       if (helperInfos != null) "helperInfos": helperInfos,
       if (observerInfos != null) "observerInfos": observerInfos,
-      if (roomId != null) "roomId": roomId,
+      if (helperRoomId != null) "helperRoomId": helperRoomId,
+      if (observerRoomId != null) "observerRoomId": observerRoomId,
       if (callIntroduction != null) "callIntroduction": callIntroduction,
     };
   }

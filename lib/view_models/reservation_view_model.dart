@@ -13,7 +13,8 @@ class ReservationViewModel {
 
   Future<String?> createReservation(
     String callIntroduction,
-    String roomId,
+    String helperRoomId,
+    String observerRoomId,
     RTCVideoRenderer localRenderer,
     RTCVideoRenderer remoteRenderer,
   ) async {
@@ -31,7 +32,8 @@ class ReservationViewModel {
       isObserverExist: false,
       callIntroduction: callIntroduction,
       createdDTTM: DateTime.now(),
-      roomId: roomId,
+      helperRoomId: helperRoomId,
+      observerRoomId: observerRoomId,
       helpeeInfos: {
         'phoneBrand': userPublicModel!.phoneBrand,
         'name': userPublicModel.name,
@@ -39,14 +41,14 @@ class ReservationViewModel {
     );
 
     await reservations
-        .doc(roomId)
+        .doc(helperRoomId)
         .set(reservationModel.toMap())
         .then((value) => res = SUCCESS)
         .catchError((err) => res = err.message);
     return res;
   }
 
-  Future<String?> updateReservationWithHelperInfos(roomId) async {
+  Future<String?> updateReservationWithHelperInfos(helperRoomId) async {
     String res = ERROR;
     String currentUserUid = _auth.currentUser!.uid;
 
@@ -63,7 +65,32 @@ class ReservationViewModel {
     );
 
     await reservations
-        .doc(roomId)
+        .doc(helperRoomId)
+        .update(reservationModel.toMap())
+        .then((value) => res = SUCCESS)
+        .catchError((err) => res = err.message);
+    return res;
+  }
+
+  Future<String?> updateReservationWithObserverInfos(
+      helperRoomId, observerRoomId) async {
+    String res = ERROR;
+    String currentUserUid = _auth.currentUser!.uid;
+
+    UserPublicModel? userPublicModel =
+        await UserViewModel().getUserPublicModel(currentUserUid);
+
+    print('[DEBUG] update reserve pulic name:${userPublicModel!.phoneBrand}');
+    ReservationModel reservationModel = ReservationModel(
+      isObserverExist: true,
+      observerInfos: {
+        'phoneBrand': userPublicModel.phoneBrand,
+        'name': userPublicModel.name,
+      },
+    );
+
+    await reservations
+        .doc(helperRoomId)
         .update(reservationModel.toMap())
         .then((value) => res = SUCCESS)
         .catchError((err) => res = err.message);

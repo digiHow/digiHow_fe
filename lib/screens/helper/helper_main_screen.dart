@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/colors.dart';
+import 'package:digi_how/consts/error_messages.dart';
 import 'package:digi_how/consts/text_style.dart';
-import 'package:digi_how/screens/helper/helper_webrtc_test_screen.dart';
+import 'package:digi_how/screens/helper/helper_observer_webrtc_screen.dart';
+import 'package:digi_how/screens/helper/helper_webrtc_screen.dart';
 import 'package:digi_how/view_models/reservation_view_model.dart';
 import 'package:digi_how/view_models/user_view_model.dart';
 import 'package:digi_how/widgets/header_logo.dart';
@@ -77,7 +79,7 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('reservations')
-          .where('isHelperExist', isEqualTo: false)
+          .orderBy('createdDTTM', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         return ListView.builder(
@@ -88,9 +90,11 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                 padding: const EdgeInsets.all(19),
                 width: 352,
                 height: 160,
-                decoration: const BoxDecoration(
-                  color: MyColors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                decoration: BoxDecoration(
+                  color: data['isHelperExist'] && data['isObserverExist']
+                      ? MyColors.grey
+                      : MyColors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +129,18 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                           height: 44,
                           child: TextButton(
                             style: MyButtonStyle.skyBlueParticipateButton,
-                            onPressed: () {},
+                            onPressed: () async {
+                              String? res = await ReservationViewModel()
+                                  .updateReservationWithObserverInfos(
+                                      data['helperRoomId'],
+                                      data['observerRoomId']);
+                              if (res == SUCCESS) {
+                                Get.to(HelperObserverWebrtcScreen(
+                                    roomId: data['observerRoomId']));
+                              } else {
+                                print('[DEBUG]:$res');
+                              }
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -143,9 +158,9 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                             onPressed: () async {
                               await ReservationViewModel()
                                   .updateReservationWithHelperInfos(
-                                      data['roomId']);
-                              Get.to(HelperWebrtcTestScreen(
-                                  roomId: data['roomId']));
+                                      data['helperRoomId']);
+                              Get.to(HelperWebrtcScreen(
+                                  roomId: data['helperRoomId']));
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

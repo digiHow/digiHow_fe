@@ -62,7 +62,8 @@ class _HelpeeSignInScreenState extends State<HelpeeSignInScreen> {
             horizontal: 41,
             vertical: 14,
           ),
-          child: Column(
+          child: ListView(
+            scrollDirection: Axis.vertical,
             children: [
               const HeaderLogo(),
               const SizedBox(
