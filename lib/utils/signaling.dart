@@ -111,10 +111,10 @@ class Signaling {
     FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentReference roomRef = db.collection('rooms').doc(roomId);
     var roomSnapshot = await roomRef.get();
-    // print('Got room ${roomSnapshot.exists}');
+    print('Got room ${roomSnapshot.exists}');
 
     if (roomSnapshot.exists) {
-      // print('Create PeerConnection with configuration: $configuration');
+      print('Create PeerConnection with configuration: $configuration');
       peerConnection = await createPeerConnection(configuration);
 
       registerPeerConnectionListeners();
@@ -127,20 +127,17 @@ class Signaling {
       var helperCandidatesCollection = roomRef.collection('helperCandidates');
       peerConnection!.onIceCandidate = (RTCIceCandidate candidate) {
         if (candidate == null) {
-          // print('onIceCandidate: complete!');
+          print('onIceCandidate: complete!');
           return;
         }
-        // print('onIceCandidate: ${candidate.toMap()}');
+        print('onIceCandidate: ${candidate.toMap()}');
         helperCandidatesCollection.add(candidate.toMap());
       };
       // Code for collecting ICE candidate above
 
       peerConnection?.onTrack = (RTCTrackEvent event) {
-        // print('Got remote track: ${event.streams[0]}');
-        // print('Got remote track2: ${event.streams[1]}');
-
         event.streams[0].getTracks().forEach((track) {
-          // print('Add a track to the helperStream: $track');
+          print('Add a track to the helperStream: $track');
           helperStream?.addTrack(track);
         });
       };
@@ -168,8 +165,8 @@ class Signaling {
       roomRef.collection('helpeeCandidates').snapshots().listen((snapshot) {
         for (var document in snapshot.docChanges) {
           var data = document.doc.data() as Map<String, dynamic>;
-          // print(data);
-          // print('Got new remote ICE candidate: $data');
+          print(data);
+          print('Got new remote ICE candidate: $data');
           peerConnection!.addCandidate(
             RTCIceCandidate(
               data['candidate'],
@@ -182,18 +179,18 @@ class Signaling {
     }
   }
 
-  Future<void> openUserMedia(
+  Future<MediaStream> openUserMedia(
     RTCVideoRenderer localVideo,
     RTCVideoRenderer remoteVideo,
+    MediaStream stream,
   ) async {
     await startForegroundService();
-    var stream = await navigator.mediaDevices
-        .getDisplayMedia({'video': true, 'audio': true});
 
     localVideo.srcObject = stream;
     localStream = stream;
 
     remoteVideo.srcObject = await createLocalMediaStream('key');
+    return stream;
   }
 
   Future<void> hangUp(RTCVideoRenderer localVideo) async {
@@ -245,7 +242,7 @@ class Signaling {
     };
 
     peerConnection?.onAddStream = (MediaStream stream) {
-      // print("Add remote stream");
+      print("Add remote stream signaling");
       onAddHelperStream?.call(stream);
       helperStream = stream;
     };

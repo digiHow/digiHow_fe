@@ -1,4 +1,4 @@
-import 'package:digi_how/utils/observer_signaling.dart';
+import 'package:digi_how/utils/signaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
@@ -11,7 +11,7 @@ class HelperWebrtcScreen extends StatefulWidget {
 }
 
 class _HelperWebrtcScreenState extends State<HelperWebrtcScreen> {
-  ObserverSignaling signaling = ObserverSignaling();
+  Signaling signaling = Signaling();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
   late String roomId;

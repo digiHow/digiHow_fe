@@ -1,4 +1,3 @@
-// import 'package:digi_how/utils/webrtc/observer_signaling.dart';
 import 'package:digi_how/utils/observer_signaling.dart';
 import 'package:digi_how/utils/signaling.dart';
 import 'package:digi_how/view_models/reservation_view_model.dart';
@@ -17,6 +16,7 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
   ObserverSignaling observerSignaling = ObserverSignaling();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
+  final RTCVideoRenderer _observerRenderer = RTCVideoRenderer();
   late String helperRoomId;
   String observerRoomId = '';
   TextEditingController textEditingController = TextEditingController(text: '');
@@ -25,11 +25,17 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
   void initState() {
     _localRenderer.initialize();
     _remoteRenderer.initialize();
+    // _observerRenderer.initialize();
 
-    signaling.onAddHelperStream = ((stream) {
-      _remoteRenderer.srcObject = stream;
-      setState(() {});
-    });
+    // signaling.onAddHelperStream = ((stream) {
+    //   _remoteRenderer.srcObject = stream;
+    //   setState(() {});
+    // });
+
+    // observerSignaling.onAddHelperStream = ((stream) {
+    //   _remoteRenderer.srcObject = stream;
+    //   setState(() {});
+    // });
 
     createRoom();
     super.initState();
@@ -44,11 +50,19 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
   }
 
   void createRoom() async {
-    await signaling.openUserMedia(_localRenderer, _remoteRenderer);
-    // await observerSignaling.openUserMedia(_localRenderer, _remoteRenderer);
+    //TODO: 이것때문에 엄청 고생함. 문제 상황 설명 노션
+    await signaling.startForegroundService();
+
+    var stream = await navigator.mediaDevices
+        .getDisplayMedia({'video': true, 'audio': true});
+    await signaling.openUserMedia(_localRenderer, _remoteRenderer, stream);
+    await observerSignaling.openUserMedia(
+        _localRenderer, _remoteRenderer, stream);
+
     helperRoomId = await signaling.createRoom();
+
     observerRoomId = await observerSignaling.createRoom();
-    print('[DEBUG] create ROOm');
+
     String? res = await ReservationViewModel().createReservation(
       '이건 테스트입니다.',
       helperRoomId,
@@ -56,7 +70,6 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
       _localRenderer,
       _remoteRenderer,
     );
-    print('[DEBUG] res:$res');
     setState(() {});
   }
 

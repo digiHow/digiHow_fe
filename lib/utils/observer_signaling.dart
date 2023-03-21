@@ -62,8 +62,6 @@ class ObserverSignaling {
     // Created a Room
 
     peerConnection?.onTrack = (RTCTrackEvent event) {
-      print('Got remote track: ${event.streams[0]}');
-
       event.streams[0].getTracks().forEach((track) {
         print('Add a track to the helperStream $track');
         helperStream?.addTrack(track);
@@ -139,7 +137,7 @@ class ObserverSignaling {
 
       peerConnection?.onTrack = (RTCTrackEvent event) {
         print('Got remote track: ${event.streams[0]}');
-        print('Got remote track2: ${event.streams[1]}');
+        // print('Got remote track2: ${event.streams[1]}');
 
         event.streams[0].getTracks().forEach((track) {
           print('Add a track to the helperStream: $track');
@@ -187,10 +185,11 @@ class ObserverSignaling {
   Future<void> openUserMedia(
     RTCVideoRenderer localVideo,
     RTCVideoRenderer remoteVideo,
+    MediaStream stream,
   ) async {
-    await startForegroundService();
-    var stream = await navigator.mediaDevices
-        .getDisplayMedia({'video': true, 'audio': true});
+    // await startForegroundService();
+    // var stream = await navigator.mediaDevices
+    //     .getDisplayMedia({'video': true, 'audio': true});
 
     localVideo.srcObject = stream;
     localStream = stream;
@@ -247,7 +246,7 @@ class ObserverSignaling {
     };
 
     peerConnection?.onAddStream = (MediaStream stream) {
-      print("Add remote stream");
+      print("Add remote stream observer");
       onAddHelperStream?.call(stream);
       helperStream = stream;
     };

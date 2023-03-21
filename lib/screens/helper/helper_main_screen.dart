@@ -135,6 +135,8 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                                       data['helperRoomId'],
                                       data['observerRoomId']);
                               if (res == SUCCESS) {
+                                print(
+                                    '[DEBUG] observerRoomId:${data['observerRoomId']}');
                                 Get.to(HelperObserverWebrtcScreen(
                                     roomId: data['observerRoomId']));
                               } else {
