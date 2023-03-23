@@ -2,6 +2,20 @@ import 'package:digi_how/consts/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextStyle {
+  static const TextStyle CbS16W400 = TextStyle(
+    //색: 검정, 크기: 16, 두께: 400
+    fontSize: 16.0,
+    fontWeight: FontWeight.w400,
+    color: MyColors.black,
+    decoration: TextDecoration.none,
+  );
+  static const TextStyle CgS18W500 = TextStyle(
+    //색: 회색, 크기: 18, 두께: 500
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    color: MyColors.grey,
+    decoration: TextDecoration.none,
+  );
   static const TextStyle CbS18W500 = TextStyle(
     //색: 검정, 크기: 18, 두께: 500
     fontSize: 18.0,
