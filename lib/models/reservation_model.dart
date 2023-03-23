@@ -12,6 +12,8 @@ class ReservationModel {
   final String? helperRoomId;
   final String? observerRoomId;
   final String? callIntroduction;
+  final bool? isCallFinished;
+  final String? userWhoFinishedCall;
 
   ReservationModel({
     this.startTime,
@@ -25,6 +27,8 @@ class ReservationModel {
     this.helperRoomId,
     this.observerRoomId,
     this.callIntroduction,
+    this.isCallFinished,
+    this.userWhoFinishedCall,
   });
 
   factory ReservationModel.fromMap(
@@ -45,6 +49,8 @@ class ReservationModel {
       helperRoomId: data?['helperRoomId'],
       observerRoomId: data?['observerRoomId'],
       callIntroduction: data?['callIntroduction'],
+      isCallFinished: data?['isCallFinished'],
+      userWhoFinishedCall: data?['userWhoFinishedCall'],
     );
   }
 
@@ -61,6 +67,9 @@ class ReservationModel {
       if (helperRoomId != null) "helperRoomId": helperRoomId,
       if (observerRoomId != null) "observerRoomId": observerRoomId,
       if (callIntroduction != null) "callIntroduction": callIntroduction,
+      if (isCallFinished != null) "isCallFinished": isCallFinished,
+      if (userWhoFinishedCall != null)
+        "userWhoFinishedCall": userWhoFinishedCall,
     };
   }
 }

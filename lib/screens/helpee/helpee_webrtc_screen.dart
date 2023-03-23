@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digi_how/consts/colors.dart';
+import 'package:digi_how/consts/text_style.dart';
+import 'package:digi_how/models/reservation_model.dart';
+import 'package:digi_how/screens/helpee/helpee_main_screen.dart';
 import 'package:digi_how/utils/observer_signaling.dart';
 import 'package:digi_how/utils/signaling.dart';
 import 'package:digi_how/view_models/reservation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get/get.dart' as GetX;
 
 class HelpeeWebrtcScreen extends StatefulWidget {
   const HelpeeWebrtcScreen({Key? key}) : super(key: key);
@@ -19,6 +25,7 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
   final RTCVideoRenderer _observerRenderer = RTCVideoRenderer();
   late String helperRoomId;
   String observerRoomId = '';
+  bool isConnected = false;
   TextEditingController textEditingController = TextEditingController(text: '');
 
   @override
@@ -27,10 +34,11 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
     _remoteRenderer.initialize();
     // _observerRenderer.initialize();
 
-    // signaling.onAddHelperStream = ((stream) {
-    //   _remoteRenderer.srcObject = stream;
-    //   setState(() {});
-    // });
+    signaling.onAddHelperStream = ((stream) {
+      _remoteRenderer.srcObject = stream;
+      isConnected = true;
+      setState(() {});
+    });
 
     // observerSignaling.onAddHelperStream = ((stream) {
     //   _remoteRenderer.srcObject = stream;
@@ -55,9 +63,10 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
 
     var stream = await navigator.mediaDevices
         .getDisplayMedia({'video': true, 'audio': true});
-    await signaling.openUserMedia(_localRenderer, _remoteRenderer, stream);
+
     await observerSignaling.openUserMedia(
         _localRenderer, _remoteRenderer, stream);
+    await signaling.openUserMedia(_localRenderer, _remoteRenderer, stream);
 
     helperRoomId = await signaling.createRoom();
 
@@ -70,28 +79,79 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
       _localRenderer,
       _remoteRenderer,
     );
+    addHangUpCheckListener();
     setState(() {});
+  }
+
+  void addHangUpCheckListener() {
+    FirebaseFirestore.instance
+        .collection('reservations')
+        .doc(helperRoomId)
+        .snapshots()
+        .listen((event) async {
+      if (event.exists) {
+        ReservationModel reservationModel =
+            ReservationModel.fromMap(event, null);
+        if (reservationModel.isCallFinished!) {
+          await signaling.hangUp(_localRenderer);
+          await observerSignaling.hangUp(_localRenderer);
+          GetX.Get.to(const HelpeeMainScreen());
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(child: RTCVideoView(_localRenderer)),
-                  // Expanded(child: RTCVideoView(_remoteRenderer)),
-                ],
+      body: Container(
+        color: MyColors.black,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              '아래 화면이 송출되고 있습니다.',
+              style: MyTextStyle.CwS15W500,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: RTCVideoView(_localRenderer)),
+                    // Expanded(child: RTCVideoView(_remoteRenderer)),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            TextButton(
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: MyColors.red,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: const Icon(
+                  Icons.call,
+                  color: MyColors.white,
+                ),
+              ),
+              onPressed: () {
+                ReservationViewModel()
+                    .updateReservationWithFinishInfo(helperRoomId);
+                // signaling.hangUp(_localRenderer);
+                // GetX.Get.to(const HelpeeMainScreen());
+              },
+            )
+          ],
+        ),
       ),
     );
   }

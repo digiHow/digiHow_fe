@@ -38,6 +38,7 @@ class ReservationViewModel {
         'phoneBrand': userPublicModel!.phoneBrand,
         'name': userPublicModel.name,
       },
+      isCallFinished: true,
     );
 
     await reservations
@@ -97,4 +98,20 @@ class ReservationViewModel {
     return res;
   }
   //TODO: hangup 기능 만들어야함
+
+  Future<String?> updateReservationWithFinishInfo(String roomId) async {
+    String res = ERROR;
+    String currentUserUid = _auth.currentUser!.uid;
+    ReservationModel reservationModel = ReservationModel(
+      isCallFinished: true,
+      endTime: DateTime.now(),
+      userWhoFinishedCall: currentUserUid,
+    );
+    await reservations
+        .doc(roomId)
+        .update(reservationModel.toMap())
+        .then((value) => res = SUCCESS)
+        .catchError((err) => res = err.message);
+    return res;
+  }
 }

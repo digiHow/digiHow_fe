@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digi_how/models/reservation_model.dart';
+import 'package:digi_how/screens/helper/helper_main_screen.dart';
 import 'package:digi_how/utils/observer_signaling.dart';
+import 'package:digi_how/view_models/reservation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get/get.dart';
 
 class HelperObserverWebrtcScreen extends StatefulWidget {
-  final String roomId;
-  const HelperObserverWebrtcScreen({Key? key, required this.roomId})
+  final String observerRoomId;
+  final String helperRoomId;
+  const HelperObserverWebrtcScreen(
+      {Key? key, required this.observerRoomId, required this.helperRoomId})
       : super(key: key);
 
   @override
@@ -17,26 +24,26 @@ class _HelperObserverWebrtcScreenState
   ObserverSignaling signaling = ObserverSignaling();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
-  late String roomId;
   TextEditingController textEditingController = TextEditingController(text: '');
 
   @override
   void initState() {
+    super.initState();
+
     _localRenderer.initialize();
     _remoteRenderer.initialize();
 
     signaling.onAddHelperStream = ((stream) {
-      print('[DEBUG] stream :$stream');
       _remoteRenderer.srcObject = stream;
       setState(() {});
     });
 
     signaling.joinRoom(
-      widget.roomId,
+      widget.observerRoomId,
       _remoteRenderer,
     );
 
-    super.initState();
+    addHangUpCheckListener();
   }
 
   @override
@@ -44,6 +51,22 @@ class _HelperObserverWebrtcScreenState
     _localRenderer.dispose();
     _remoteRenderer.dispose();
     super.dispose();
+  }
+
+  void addHangUpCheckListener() {
+    FirebaseFirestore.instance
+        .collection('reservations')
+        .doc(widget.helperRoomId)
+        .snapshots()
+        .listen((event) async {
+      if (event.exists) {
+        ReservationModel reservationModel =
+            ReservationModel.fromMap(event, null);
+        if (reservationModel.isCallFinished!) {
+          Get.to(const HelperMainScreen());
+        }
+      }
+    });
   }
 
   @override
@@ -64,6 +87,15 @@ class _HelperObserverWebrtcScreenState
               ),
             ),
           ),
+          TextButton(
+            child: const Text('끊어'),
+            onPressed: () {
+              ReservationViewModel()
+                  .updateReservationWithFinishInfo(widget.helperRoomId);
+              signaling.hangUp(_localRenderer);
+              Get.to(const HelperMainScreen());
+            },
+          )
         ],
       ),
     );

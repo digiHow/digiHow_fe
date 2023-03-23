@@ -47,6 +47,15 @@ class MyButtonStyle {
     backgroundColor: const MaterialStatePropertyAll(MyColors.primary),
   );
 
+  static ButtonStyle nextButtonWhite = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.white),
+  );
+
   static ButtonStyle skyBlueParticipateButton = ButtonStyle(
     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
       RoundedRectangleBorder(
