@@ -162,4 +162,31 @@ class MyTextStyle {
     color: MyColors.red,
     decoration: TextDecoration.none,
   );
+  static const TextStyle disabledBigNormalText = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: Color(0xffAEC4FF),
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle disabledBigBoldText = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: Color(0xffAEC4FF),
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle disabledSmallNormalText = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: Color(0xffAEC4FF),
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle disabledSmallBoldText = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: Color(0xffAEC4FF),
+    decoration: TextDecoration.none,
+  );
 }
