@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digi_how/consts/colors.dart';
 import 'package:digi_how/models/reservation_model.dart';
 import 'package:digi_how/screens/helper/helper_main_screen.dart';
 import 'package:digi_how/utils/signaling.dart';
@@ -69,31 +70,44 @@ class _HelperWebrtcScreenState extends State<HelperWebrtcScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Expanded(child: RTCVideoView(_localRenderer, mirror: true)),
-                  Expanded(child: RTCVideoView(_remoteRenderer)),
-                ],
+      body: Container(
+        color: MyColors.black,
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Expanded(child: RTCVideoView(_localRenderer, mirror: true)),
+                    Expanded(child: RTCVideoView(_remoteRenderer)),
+                  ],
+                ),
               ),
             ),
-          ),
-          TextButton(
-            child: const Text('끊어'),
-            onPressed: () {
-              ReservationViewModel()
-                  .updateReservationWithFinishInfo(widget.roomId);
-              signaling.hangUp(_localRenderer);
-              Get.to(const HelperMainScreen());
-            },
-          )
-        ],
+            TextButton(
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: MyColors.red,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: const Icon(
+                  Icons.call,
+                  color: MyColors.white,
+                ),
+              ),
+              onPressed: () {
+                ReservationViewModel()
+                    .updateReservationWithFinishInfo(widget.roomId);
+                signaling.hangUp(_localRenderer);
+                Get.to(const HelperMainScreen());
+              },
+            )
+          ],
+        ),
       ),
     );
   }
