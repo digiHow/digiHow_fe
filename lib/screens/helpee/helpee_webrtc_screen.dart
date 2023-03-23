@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digi_how/models/reservation_model.dart';
+import 'package:digi_how/screens/helpee/helpee_main_screen.dart';
 import 'package:digi_how/utils/observer_signaling.dart';
 import 'package:digi_how/utils/signaling.dart';
 import 'package:digi_how/view_models/reservation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get/get.dart' as GetX;
 
 class HelpeeWebrtcScreen extends StatefulWidget {
   const HelpeeWebrtcScreen({Key? key}) : super(key: key);
@@ -55,9 +59,9 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
 
     var stream = await navigator.mediaDevices
         .getDisplayMedia({'video': true, 'audio': true});
-    await signaling.openUserMedia(_localRenderer, _remoteRenderer, stream);
     await observerSignaling.openUserMedia(
         _localRenderer, _remoteRenderer, stream);
+    await signaling.openUserMedia(_localRenderer, _remoteRenderer, stream);
 
     helperRoomId = await signaling.createRoom();
 
@@ -70,7 +74,26 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
       _localRenderer,
       _remoteRenderer,
     );
+    addHangUpCheckListener();
     setState(() {});
+  }
+
+  void addHangUpCheckListener() {
+    FirebaseFirestore.instance
+        .collection('reservations')
+        .doc(helperRoomId)
+        .snapshots()
+        .listen((event) async {
+      if (event.exists) {
+        ReservationModel reservationModel =
+            ReservationModel.fromMap(event, null);
+        if (reservationModel.isCallFinished!) {
+          await signaling.hangUp(_localRenderer);
+          await observerSignaling.hangUp(_localRenderer);
+          GetX.Get.to(const HelpeeMainScreen());
+        }
+      }
+    });
   }
 
   @override
@@ -91,6 +114,15 @@ class _HelpeeWebrtcScreenState extends State<HelpeeWebrtcScreen> {
               ),
             ),
           ),
+          TextButton(
+            child: const Text('끊어'),
+            onPressed: () {
+              ReservationViewModel()
+                  .updateReservationWithFinishInfo(helperRoomId);
+              // signaling.hangUp(_localRenderer);
+              // GetX.Get.to(const HelpeeMainScreen());
+            },
+          )
         ],
       ),
     );
