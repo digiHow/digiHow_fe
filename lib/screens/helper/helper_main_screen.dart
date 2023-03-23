@@ -82,104 +82,117 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
           .orderBy('createdDTTM', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
-        return ListView.builder(
-            itemCount: snapshot.data.docs.length,
-            itemBuilder: (context, index) {
-              DocumentSnapshot data = snapshot.data.docs[index];
-              return Container(
-                padding: const EdgeInsets.all(19),
-                width: 352,
-                height: 160,
-                decoration: BoxDecoration(
-                  color: data['isHelperExist'] && data['isObserverExist']
-                      ? MyColors.grey
-                      : MyColors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${data['helpeeInfos']['name']}님',
-                          style: MyTextStyle.CbS20W700,
-                        ),
-                        const Text(
-                          '이 도움을 요청합니다.',
-                          style: MyTextStyle.CbS20W500,
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const Text(
-                      '대기 중...',
-                      style: MyTextStyle.CgS14W500,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 132,
-                          height: 44,
-                          child: TextButton(
-                            style: MyButtonStyle.skyBlueParticipateButton,
-                            onPressed: () async {
-                              String? res = await ReservationViewModel()
-                                  .updateReservationWithObserverInfos(
-                                      data['helperRoomId'],
-                                      data['observerRoomId']);
-                              if (res == SUCCESS) {
-                                print(
-                                    '[DEBUG] observerRoomId:${data['observerRoomId']}');
-                                Get.to(HelperObserverWebrtcScreen(
-                                    helperRoomId: data['helperRoomId'],
-                                    observerRoomId: data['observerRoomId']));
-                              } else {
-                                print('[DEBUG]:$res');
-                              }
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text('감시자', style: MyTextStyle.CpS15W700),
-                                Text('로 참여', style: MyTextStyle.CpS15W500),
-                              ],
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text(
+            '가져오는 중...',
+            style: MyTextStyle.CwS18W500,
+          );
+        } else if (snapshot.hasError) {
+          return const Text(
+            '에러가 발생했습니다.',
+            style: MyTextStyle.CwS18W500,
+          );
+        } else {
+          return ListView.builder(
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot data = snapshot.data.docs[index];
+                return Container(
+                  padding: const EdgeInsets.all(19),
+                  margin: const EdgeInsets.only(bottom: 18),
+                  width: 352,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: data['isHelperExist'] && data['isObserverExist']
+                        ? MyColors.grey
+                        : MyColors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${data['helpeeInfos']['name']}님',
+                            style: MyTextStyle.CbS20W700,
+                          ),
+                          const Text(
+                            '이 도움을 요청합니다.',
+                            style: MyTextStyle.CbS20W500,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      const Text(
+                        '대기 중...',
+                        style: MyTextStyle.CgS14W500,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 132,
+                            height: 44,
+                            child: TextButton(
+                              style: MyButtonStyle.skyBlueParticipateButton,
+                              onPressed: () async {
+                                String? res = await ReservationViewModel()
+                                    .updateReservationWithObserverInfos(
+                                        data['helperRoomId'],
+                                        data['observerRoomId']);
+                                if (res == SUCCESS) {
+                                  print(
+                                      '[DEBUG] observerRoomId:${data['observerRoomId']}');
+                                  Get.to(HelperObserverWebrtcScreen(
+                                      helperRoomId: data['helperRoomId'],
+                                      observerRoomId: data['observerRoomId']));
+                                } else {
+                                  print('[DEBUG]:$res');
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text('감시자', style: MyTextStyle.CpS15W700),
+                                  Text('로 참여', style: MyTextStyle.CpS15W500),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 132,
-                          height: 44,
-                          child: TextButton(
-                            style: MyButtonStyle.primaryParticipateButton,
-                            onPressed: () async {
-                              await ReservationViewModel()
-                                  .updateReservationWithHelperInfos(
-                                      data['helperRoomId']);
-                              Get.to(HelperWebrtcScreen(
-                                  roomId: data['helperRoomId']));
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text('도우미', style: MyTextStyle.CwS15W700),
-                                Text('로 참여', style: MyTextStyle.CwS15W500),
-                              ],
+                          SizedBox(
+                            width: 132,
+                            height: 44,
+                            child: TextButton(
+                              style: MyButtonStyle.primaryParticipateButton,
+                              onPressed: () async {
+                                await ReservationViewModel()
+                                    .updateReservationWithHelperInfos(
+                                        data['helperRoomId']);
+                                Get.to(HelperWebrtcScreen(
+                                    roomId: data['helperRoomId']));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text('도우미', style: MyTextStyle.CwS15W700),
+                                  Text('로 참여', style: MyTextStyle.CwS15W500),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            });
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              });
+        }
       },
     );
   }
