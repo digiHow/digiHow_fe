@@ -12,4 +12,6 @@ class MyColors {
   static const Color red = Colors.red;
 
   static const Color notActivated = Color(0xff9AB5FF);
+  static const Color finishedBoxColor = Color(0xff80A3FF);
+  static const Color finishedTextColor = Color(0xffD4DFFF);
 }

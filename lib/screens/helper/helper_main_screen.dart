@@ -46,9 +46,9 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
               ),
               _infoTexts(),
               const SizedBox(
-                height: 52,
+                height: 22,
               ),
-              SizedBox(width: 352, height: 400, child: _reservationBoxes()),
+              SizedBox(width: 352, height: 500, child: _reservationBoxes()),
             ],
           ),
         ),
@@ -79,6 +79,7 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('reservations')
+          // .orderBy('isCallFinished', descending: true)
           .orderBy('createdDTTM', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -97,14 +98,16 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 DocumentSnapshot data = snapshot.data.docs[index];
+                bool isAllFinished =
+                    data['isHelperExist'] && data['isObserverExist'];
                 return Container(
                   padding: const EdgeInsets.all(19),
                   margin: const EdgeInsets.only(bottom: 18),
                   width: 352,
                   height: 160,
                   decoration: BoxDecoration(
-                    color: data['isHelperExist'] && data['isObserverExist']
-                        ? MyColors.grey
+                    color: isAllFinished
+                        ? MyColors.finishedBoxColor
                         : MyColors.white,
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
@@ -115,23 +118,29 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                         children: [
                           Text(
                             '${data['helpeeInfos']['name']}님',
-                            style: MyTextStyle.CbS20W700,
+                            style: isAllFinished
+                                ? MyTextStyle.disabledBigBoldText
+                                : MyTextStyle.CbS20W700,
                           ),
-                          const Text(
+                          Text(
                             '이 도움을 요청합니다.',
-                            style: MyTextStyle.CbS20W500,
+                            style: isAllFinished
+                                ? MyTextStyle.disabledBigNormalText
+                                : MyTextStyle.CbS20W500,
                           )
                         ],
                       ),
                       const SizedBox(
                         height: 12,
                       ),
-                      const Text(
-                        '대기 중...',
-                        style: MyTextStyle.CgS14W500,
+                      Text(
+                        isAllFinished ? '완료' : '대기 중...',
+                        style: isAllFinished
+                            ? MyTextStyle.disabledSmallNormalText
+                            : MyTextStyle.CgS14W500,
                       ),
                       const SizedBox(
-                        height: 16,
+                        height: 15,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,27 +149,38 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                             width: 132,
                             height: 44,
                             child: TextButton(
-                              style: MyButtonStyle.skyBlueParticipateButton,
+                              style: data['isObserverExist']
+                                  ? MyButtonStyle.participateButtonDisabled
+                                  : MyButtonStyle.skyBlueParticipateButton,
                               onPressed: () async {
-                                String? res = await ReservationViewModel()
-                                    .updateReservationWithObserverInfos(
-                                        data['helperRoomId'],
-                                        data['observerRoomId']);
-                                if (res == SUCCESS) {
-                                  print(
-                                      '[DEBUG] observerRoomId:${data['observerRoomId']}');
-                                  Get.to(HelperObserverWebrtcScreen(
-                                      helperRoomId: data['helperRoomId'],
-                                      observerRoomId: data['observerRoomId']));
-                                } else {
-                                  print('[DEBUG]:$res');
+                                if (!data['isObserverExist']) {
+                                  String? res = await ReservationViewModel()
+                                      .updateReservationWithObserverInfos(
+                                          data['helperRoomId'],
+                                          data['observerRoomId']);
+                                  if (res == SUCCESS) {
+                                    print(
+                                        '[DEBUG] observerRoomId:${data['observerRoomId']}');
+                                    Get.to(HelperObserverWebrtcScreen(
+                                        helperRoomId: data['helperRoomId'],
+                                        observerRoomId:
+                                            data['observerRoomId']));
+                                  } else {
+                                    print('[DEBUG]:$res');
+                                  }
                                 }
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text('감시자', style: MyTextStyle.CpS15W700),
-                                  Text('로 참여', style: MyTextStyle.CpS15W500),
+                                children: [
+                                  Text('감시자',
+                                      style: data['isObserverExist']
+                                          ? MyTextStyle.disabledSmallBoldText
+                                          : MyTextStyle.CpS15W700),
+                                  Text('로 참여',
+                                      style: data['isObserverExist']
+                                          ? MyTextStyle.disabledSmallNormalText
+                                          : MyTextStyle.CpS15W500),
                                 ],
                               ),
                             ),
@@ -169,19 +189,33 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                             width: 132,
                             height: 44,
                             child: TextButton(
-                              style: MyButtonStyle.primaryParticipateButton,
+                              style: isAllFinished
+                                  ? MyButtonStyle.participateButtonDisabled
+                                  //TODO: 나중에 색 디자인 나오면 바꿔야 함
+                                  : data['isHelperExist']
+                                      ? MyButtonStyle
+                                          .primaryParticipateButtonDisabled
+                                      : MyButtonStyle.primaryParticipateButton,
                               onPressed: () async {
-                                await ReservationViewModel()
-                                    .updateReservationWithHelperInfos(
-                                        data['helperRoomId']);
-                                Get.to(HelperWebrtcScreen(
-                                    roomId: data['helperRoomId']));
+                                if (!data['isHelperExist']) {
+                                  await ReservationViewModel()
+                                      .updateReservationWithHelperInfos(
+                                          data['helperRoomId']);
+                                  Get.to(HelperWebrtcScreen(
+                                      roomId: data['helperRoomId']));
+                                }
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text('도우미', style: MyTextStyle.CwS15W700),
-                                  Text('로 참여', style: MyTextStyle.CwS15W500),
+                                children: [
+                                  Text('도우미',
+                                      style: data['isHelperExist']
+                                          ? MyTextStyle.disabledSmallBoldText
+                                          : MyTextStyle.CwS15W700),
+                                  Text('로 참여',
+                                      style: data['isHelperExist']
+                                          ? MyTextStyle.disabledSmallNormalText
+                                          : MyTextStyle.CwS15W500),
                                 ],
                               ),
                             ),
