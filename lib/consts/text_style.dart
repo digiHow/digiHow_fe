@@ -52,6 +52,13 @@ class MyTextStyle {
     decoration: TextDecoration.none,
   );
 
+  static const TextStyle CwS24W500 = TextStyle(
+    fontSize: 24.0,
+    fontWeight: FontWeight.w500,
+    color: MyColors.white,
+    decoration: TextDecoration.none,
+  );
+
   static const TextStyle CwS20W700 = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.w700,

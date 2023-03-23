@@ -54,18 +54,14 @@ class _HelperObserverWebrtcScreenState
   }
 
   void addHangUpCheckListener() {
-    print('hi im in addHangup observer');
-    print('helperRoomId: ${widget.helperRoomId}');
     FirebaseFirestore.instance
         .collection('reservations')
         .doc(widget.helperRoomId)
         .snapshots()
         .listen((event) async {
-      print('event:$event');
       if (event.exists) {
         ReservationModel reservationModel =
             ReservationModel.fromMap(event, null);
-        print('isCallfinished: ${reservationModel.isCallFinished}');
         if (reservationModel.isCallFinished!) {
           Get.to(const HelperMainScreen());
         }
