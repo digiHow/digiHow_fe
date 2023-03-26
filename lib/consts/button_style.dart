@@ -56,16 +56,7 @@ class MyButtonStyle {
     backgroundColor: const MaterialStatePropertyAll(MyColors.white),
   );
 
-  static ButtonStyle skyBlueParticipateButton = ButtonStyle(
-    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.0),
-      ),
-    ),
-    backgroundColor: const MaterialStatePropertyAll(MyColors.skyBlue),
-  );
-
-  static ButtonStyle primaryParticipateButton = ButtonStyle(
+  static ButtonStyle participateButtonEnabled = ButtonStyle(
     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24.0),
@@ -80,15 +71,15 @@ class MyButtonStyle {
         borderRadius: BorderRadius.circular(24.0),
       ),
     ),
-    backgroundColor: const MaterialStatePropertyAll(Color(0xff99B4FF)),
+    backgroundColor: const MaterialStatePropertyAll(Color(0xff5785FF)),
   );
 
-  static ButtonStyle primaryParticipateButtonDisabled = ButtonStyle(
+  static ButtonStyle onlyOneParticipateButtonDisabled = ButtonStyle(
     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24.0),
       ),
     ),
-    backgroundColor: const MaterialStatePropertyAll(MyColors.notActivated),
+    backgroundColor: const MaterialStatePropertyAll(Color(0xffD0DCFF)),
   );
 }

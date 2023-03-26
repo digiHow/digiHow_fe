@@ -164,28 +164,35 @@ class MyTextStyle {
   static const TextStyle disabledBigNormalText = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w500,
-    color: Color(0xffAEC4FF),
+    color: Color(0xffB8CCFF),
     decoration: TextDecoration.none,
   );
 
   static const TextStyle disabledBigBoldText = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,
-    color: Color(0xffAEC4FF),
+    color: Color(0xffB8CCFF),
     decoration: TextDecoration.none,
   );
 
   static const TextStyle disabledSmallNormalText = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: Color(0xffAEC4FF),
+    color: Color(0xffB8CCFF),
     decoration: TextDecoration.none,
   );
 
   static const TextStyle disabledSmallBoldText = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-    color: Color(0xffAEC4FF),
+    color: Color(0xffB8CCFF),
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle onlyOneParticipateButtonDisabledText = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: MyColors.white,
     decoration: TextDecoration.none,
   );
 }

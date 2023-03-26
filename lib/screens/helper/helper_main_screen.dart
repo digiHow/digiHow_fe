@@ -149,9 +149,12 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                             width: 132,
                             height: 44,
                             child: TextButton(
-                              style: data['isObserverExist']
+                              style: isAllFinished
                                   ? MyButtonStyle.participateButtonDisabled
-                                  : MyButtonStyle.skyBlueParticipateButton,
+                                  : data['isObserverExist']
+                                      ? MyButtonStyle
+                                          .onlyOneParticipateButtonDisabled
+                                      : MyButtonStyle.participateButtonEnabled,
                               onPressed: () async {
                                 if (!data['isObserverExist']) {
                                   String? res = await ReservationViewModel()
@@ -174,13 +177,19 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('감시자',
-                                      style: data['isObserverExist']
+                                      style: isAllFinished
                                           ? MyTextStyle.disabledSmallBoldText
-                                          : MyTextStyle.CpS15W700),
+                                          : data['isObserverExist']
+                                              ? MyTextStyle
+                                                  .onlyOneParticipateButtonDisabledText
+                                              : MyTextStyle.CwS15W700),
                                   Text('로 참여',
-                                      style: data['isObserverExist']
+                                      style: isAllFinished
                                           ? MyTextStyle.disabledSmallNormalText
-                                          : MyTextStyle.CpS15W500),
+                                          : data['isObserverExist']
+                                              ? MyTextStyle
+                                                  .onlyOneParticipateButtonDisabledText
+                                              : MyTextStyle.CwS15W700),
                                 ],
                               ),
                             ),
@@ -191,11 +200,10 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                             child: TextButton(
                               style: isAllFinished
                                   ? MyButtonStyle.participateButtonDisabled
-                                  //TODO: 나중에 색 디자인 나오면 바꿔야 함
                                   : data['isHelperExist']
                                       ? MyButtonStyle
-                                          .primaryParticipateButtonDisabled
-                                      : MyButtonStyle.primaryParticipateButton,
+                                          .onlyOneParticipateButtonDisabled
+                                      : MyButtonStyle.participateButtonEnabled,
                               onPressed: () async {
                                 if (!data['isHelperExist']) {
                                   await ReservationViewModel()
@@ -209,13 +217,19 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('도우미',
-                                      style: data['isHelperExist']
+                                      style: isAllFinished
                                           ? MyTextStyle.disabledSmallBoldText
-                                          : MyTextStyle.CwS15W700),
+                                          : data['isHelperExist']
+                                              ? MyTextStyle
+                                                  .onlyOneParticipateButtonDisabledText
+                                              : MyTextStyle.CwS15W700),
                                   Text('로 참여',
-                                      style: data['isHelperExist']
+                                      style: isAllFinished
                                           ? MyTextStyle.disabledSmallNormalText
-                                          : MyTextStyle.CwS15W500),
+                                          : data['isHelperExist']
+                                              ? MyTextStyle
+                                                  .onlyOneParticipateButtonDisabledText
+                                              : MyTextStyle.CwS15W700),
                                 ],
                               ),
                             ),
