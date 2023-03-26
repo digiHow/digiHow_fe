@@ -70,6 +70,7 @@ class UserViewModel {
 
   Future<String> createUserDbWithUidAndPutPersonalInfos({
     required String name,
+    required bool isHelpee,
   }) async {
     String res = ERROR;
     String currentUserUid = _auth.currentUser!.uid;
@@ -80,6 +81,7 @@ class UserViewModel {
       createdDate: now,
       updatedDate: now,
       lastLogin: now,
+      isHelpee: isHelpee,
     );
     await users
         .doc(currentUserUid)
@@ -103,5 +105,55 @@ class UserViewModel {
         .then((value) => res = SUCCESS)
         .catchError((err) => res = err.message);
     return res;
+  }
+
+  Future<String?> getUserBrandInfo() async {
+    String currentUserUid = _auth.currentUser!.uid;
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await users
+        .doc(currentUserUid)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+
+    if (snapshot.exists) {
+      UserPublicModel user = UserPublicModel.fromMap(snapshot, null);
+      return user.phoneBrand;
+    } else {
+      return null;
+    }
+  }
+
+  //TODO: 중복 없애기
+  Future<String?> getUserName() async {
+    String currentUserUid = _auth.currentUser!.uid;
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await users
+        .doc(currentUserUid)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+    if (snapshot.exists) {
+      UserPublicModel user = UserPublicModel.fromMap(snapshot, null);
+      return user.name;
+    } else {
+      return '';
+    }
+  }
+
+  Future<UserPublicModel?> getUserPublicModel(currentUserUid) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await users
+        .doc(currentUserUid)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+    if (snapshot.exists) {
+      UserPublicModel user = UserPublicModel.fromMap(snapshot, null);
+      return user;
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> getIsUserHelpee() async {
+    String currentUserUid = _auth.currentUser!.uid;
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await users
+        .doc(currentUserUid)
+        .get() as DocumentSnapshot<Map<String, dynamic>>;
+    UserPublicModel user = UserPublicModel.fromMap(snapshot, null);
+    print(user.isHelpee);
+    return user.isHelpee!;
   }
 }

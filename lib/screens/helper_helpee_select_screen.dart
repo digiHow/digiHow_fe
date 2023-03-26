@@ -1,6 +1,6 @@
 import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/text_style.dart';
-import 'package:digi_how/screens/helpee/helpee_signup_screen.dart';
+import 'package:digi_how/screens/helpee/helpee_signin_screen.dart';
 import 'package:digi_how/screens/helper/helper_signup_screen.dart';
 import 'package:digi_how/widgets/header_logo.dart';
 import 'package:flutter/material.dart';
@@ -58,8 +58,7 @@ class HelperHelpeeSelectScreen extends StatelessWidget {
       child: TextButton(
         style: MyButtonStyle.bigButtonPrimary,
         onPressed: () {
-          Get.to(const HelpeeSignUpScreen());
-          //  Get.to(const HelpeeBrandSelectScreen());
+          Get.to(const HelpeeSignInScreen());
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

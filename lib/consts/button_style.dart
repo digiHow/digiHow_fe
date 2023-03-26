@@ -20,6 +20,15 @@ class MyButtonStyle {
     backgroundColor: const MaterialStatePropertyAll(MyColors.skyBlue),
   );
 
+  static ButtonStyle callButtonWhite = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(48.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.white),
+  );
+
   static ButtonStyle nextButtonNotActivated = ButtonStyle(
     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
       RoundedRectangleBorder(
@@ -36,5 +45,50 @@ class MyButtonStyle {
       ),
     ),
     backgroundColor: const MaterialStatePropertyAll(MyColors.primary),
+  );
+
+  static ButtonStyle nextButtonWhite = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.white),
+  );
+
+  static ButtonStyle skyBlueParticipateButton = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.skyBlue),
+  );
+
+  static ButtonStyle primaryParticipateButton = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.primary),
+  );
+
+  static ButtonStyle participateButtonDisabled = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(Color(0xff99B4FF)),
+  );
+
+  static ButtonStyle primaryParticipateButtonDisabled = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.notActivated),
   );
 }
