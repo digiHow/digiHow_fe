@@ -47,7 +47,7 @@ class _MatchingCompleteState extends State<MatchingComplete> {
             ),
             const Spacer(),
             const Text(
-              "박00님과 매칭되었습니다.",
+              "박유주님과 매칭되었습니다.",
               style: TextStyle(
                 color: Color(0xFF0047FF),
                 fontSize: 20 * 0.9,

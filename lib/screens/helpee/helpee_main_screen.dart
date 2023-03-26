@@ -1,7 +1,7 @@
 import 'package:digi_how/consts/button_style.dart';
 import 'package:digi_how/consts/colors.dart';
 import 'package:digi_how/consts/text_style.dart';
-import 'package:digi_how/screens/helpee/helpee_alert_screen.dart';
+import 'package:digi_how/screens/matching/matching_voice.dart';
 import 'package:digi_how/view_models/user_view_model.dart';
 import 'package:digi_how/widgets/header_logo.dart';
 import 'package:digi_how/widgets/my_bottom_navigation_bar.dart';
@@ -86,7 +86,7 @@ class _HelpeeMainScreenState extends State<HelpeeMainScreen> {
       child: TextButton(
         style: MyButtonStyle.callButtonWhite,
         onPressed: () {
-          Get.to(HelpeeAlertScreen());
+          Get.to(const MatchingVoice());
         },
         child: const Icon(
           Icons.phone,
