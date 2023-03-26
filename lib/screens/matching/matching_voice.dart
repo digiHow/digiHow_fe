@@ -1,4 +1,6 @@
+import 'package:digi_how/screens/matching/matching_load.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MatchingVoice extends StatefulWidget {
   const MatchingVoice({super.key});
@@ -109,7 +111,9 @@ class _MatchingVoiceState extends State<MatchingVoice> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.to(const MatchingLoad());
+              },
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Container(
