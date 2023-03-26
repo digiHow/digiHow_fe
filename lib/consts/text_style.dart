@@ -8,7 +8,13 @@ class MyTextStyle {
     color: MyColors.black,
     decoration: TextDecoration.none,
   );
-
+  static const TextStyle CgS18W500 = TextStyle(
+    //색: 회색, 크기: 18, 두께: 500
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    color: MyColors.grey,
+    decoration: TextDecoration.none,
+  );
   static const TextStyle CbS18W500 = TextStyle(
     //색: 검정, 크기: 18, 두께: 500
     fontSize: 18.0,
