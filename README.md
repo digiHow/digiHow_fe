@@ -24,5 +24,5 @@ In 'screens', we divided as helpee and helper folders.
 <h3>Screens</h3>
 
 ![helper mypage](https://user-images.githubusercontent.com/91544407/229156097-6dd459cb-f192-41fa-b41e-744e37d8f473.png) ![helper instruction](https://user-images.githubusercontent.com/91544407/229156105-ad730465-d612-4f29-bcf6-2fb47f54fca3.png)
-![helpee alert](https://user-images.githubusercontent.com/91544407/229156115-a3a7a39d-b16d-4756-8ad4-5fde5aa459fd.png) ![helper_mainpage_participate](https://user-images.githubusercontent.com/91544407/229156119-37e2d11f-90b0-4ac5-8a14-13d8098037a7.png)
-![helpee_main](https://user-images.githubusercontent.com/91544407/229156124-307e647d-27b4-4dde-a819-081af4e4339e.png)
+![helper_mainpage_participate](https://user-images.githubusercontent.com/91544407/229156119-37e2d11f-90b0-4ac5-8a14-13d8098037a7.png)
+
