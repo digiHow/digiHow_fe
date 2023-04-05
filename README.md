@@ -1,7 +1,7 @@
 #digiHow
 
 <h1>digiHow</h1>
-Digital education platform for digital alienation.
+Digital education platform for digital divide.
 
 <h3>Technologies Used</h3>
 * Firebase
