@@ -15,7 +15,8 @@ This project uses the MVVM (Model-View-ViewModel) architecture pattern for Flutt
 'model' folder for model, 'screens' folder is for view, 'view_model' folder for viewModel. 
 In 'screens', we divided as helpee and helper folders.
 
-<h3>Features</h3>
+
+###Features###
 - easy sign-in/sign-up
 - easy reservation for matching with helper
 - observer role for privacy issues
@@ -29,11 +30,7 @@ In 'screens', we divided as helpee and helper folders.
 ## <h2>Run</h2>
 
 <h3>Install</h3>
-~~~
-flutter pub get
-~~~
+`flutter pub get`
 <h3>Start</h3>
-~~~
-flutter run
-~~~
+`flutter run`
 We support this application on Android and IOS platform.
