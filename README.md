@@ -24,7 +24,9 @@ Our architecture follows the MVVM pattern, which helps to separate the concerns 
 ### Features ###
 - easy sign-in/sign-up
 ![simulator_screenshot_473614A3-624E-4A1F-A0E2-D06D8AC95AB1](https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png)
+<img src = "https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png" width="1170" height="2532">
 ![simulator_screenshot_7C693974-DA51-49C4-A1C1-52E58BDDBF73](https://user-images.githubusercontent.com/91544407/229956403-6610e8d3-b948-4007-8b27-fd70c2b4c193.png)
+<img src = "[https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png](https://user-images.githubusercontent.com/91544407/229956403-6610e8d3-b948-4007-8b27-fd70c2b4c193.png)" width="1170" height="2532">
 
 - easy reservation for matching with helper
 ![simulator_screenshot_CE82CE19-446B-410A-B795-9012B8F5664C](https://user-images.githubusercontent.com/91544407/229956608-7b9ac482-f024-4b3a-aec9-b9eb10fff3c1.png)
