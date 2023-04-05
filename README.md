@@ -46,5 +46,6 @@ Our architecture follows the MVVM pattern, which helps to separate the concerns 
 `flutter run`
 
 We support this application on Android and IOS platform.
+But for now, ***only android real device can share their screen.*** Other emulators and real devices can watch other's shared screen.
 
 We uploaded firebase_option file for demo. For real product, we use production options.
