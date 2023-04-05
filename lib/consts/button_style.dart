@@ -82,4 +82,22 @@ class MyButtonStyle {
     ),
     backgroundColor: const MaterialStatePropertyAll(Color(0xffD0DCFF)),
   );
+
+  static ButtonStyle emailLoginButton = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(Color(0xffEEEEEE)),
+  );
+
+  static ButtonStyle phoneLoginButton = ButtonStyle(
+    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    backgroundColor: const MaterialStatePropertyAll(MyColors.primary),
+  );
 }
