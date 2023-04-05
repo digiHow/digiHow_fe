@@ -23,26 +23,19 @@ Our architecture follows the MVVM pattern, which helps to separate the concerns 
 
 ### Features ###
 - easy sign-in/sign-up
-![simulator_screenshot_473614A3-624E-4A1F-A0E2-D06D8AC95AB1](https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png)
-<img src = "https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png" width="1170" height="2532">
-![simulator_screenshot_7C693974-DA51-49C4-A1C1-52E58BDDBF73](https://user-images.githubusercontent.com/91544407/229956403-6610e8d3-b948-4007-8b27-fd70c2b4c193.png)
-<img src = "[https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png](https://user-images.githubusercontent.com/91544407/229956403-6610e8d3-b948-4007-8b27-fd70c2b4c193.png)" width="1170" height="2532">
-
 - easy reservation for matching with helper
-![simulator_screenshot_CE82CE19-446B-410A-B795-9012B8F5664C](https://user-images.githubusercontent.com/91544407/229956608-7b9ac482-f024-4b3a-aec9-b9eb10fff3c1.png)
-
-![simulator_screenshot_248B0683-A2CE-48A7-928E-05C01219C9AB](https://user-images.githubusercontent.com/91544407/229956678-be02bcab-488f-44d0-9faa-dfcfbc3fb996.png)
-
-![simulator_screenshot_63582CFF-C014-460D-BCA4-3C3A63CA2CB3](https://user-images.githubusercontent.com/91544407/229956702-6be8d617-721a-4c65-a8b8-7672d443a852.png)
-
-![simulator_screenshot_8A7E7D10-4800-411D-8162-9BAA32BBA0E7](https://user-images.githubusercontent.com/91544407/229956775-3df8b229-640b-4890-8b66-e2988dc77362.png)
-
 - observer role for privacy issues
+- easy screen share with webRTC technology
 
+
+![simulator_screenshot_473614A3-624E-4A1F-A0E2-D06D8AC95AB1](https://user-images.githubusercontent.com/91544407/229956572-7c3ce48c-f320-48ac-9d15-cf2faa27e078.png)
+![simulator_screenshot_7C693974-DA51-49C4-A1C1-52E58BDDBF73](https://user-images.githubusercontent.com/91544407/229956403-6610e8d3-b948-4007-8b27-fd70c2b4c193.png)
+![simulator_screenshot_CE82CE19-446B-410A-B795-9012B8F5664C](https://user-images.githubusercontent.com/91544407/229956608-7b9ac482-f024-4b3a-aec9-b9eb10fff3c1.png)
+![simulator_screenshot_248B0683-A2CE-48A7-928E-05C01219C9AB](https://user-images.githubusercontent.com/91544407/229956678-be02bcab-488f-44d0-9faa-dfcfbc3fb996.png)
+![simulator_screenshot_63582CFF-C014-460D-BCA4-3C3A63CA2CB3](https://user-images.githubusercontent.com/91544407/229956702-6be8d617-721a-4c65-a8b8-7672d443a852.png)
+![simulator_screenshot_8A7E7D10-4800-411D-8162-9BAA32BBA0E7](https://user-images.githubusercontent.com/91544407/229956775-3df8b229-640b-4890-8b66-e2988dc77362.png)
 ![simulator_screenshot_87A1F7A8-2991-4596-A36C-D08012D7044A](https://user-images.githubusercontent.com/91544407/229957072-2a8792b6-86cd-48c0-bb79-3a22f7c3cb95.png)
 
-- easy screen share with webRTC technology
-<img width="336" alt="Screenshot 2023-04-05 at 10 34 43 AM" src="https://user-images.githubusercontent.com/91544407/229958607-3867f8ee-34c3-4c8e-8cf0-c8da89457293.png">
 ---
 
 
