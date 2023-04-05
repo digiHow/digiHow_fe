@@ -1,5 +1,3 @@
-#digiHow
-
 <h1>digiHow</h1>
 Digital education platform for digital divide.
 
@@ -32,4 +30,6 @@ In 'screens', we divided as helpee and helper folders.
 `flutter pub get`
 ### Start ###
 `flutter run`
+
 We support this application on Android and IOS platform.
+We uploaded firebase_option file for demo. For real product, we use production options.
