@@ -48,7 +48,7 @@ class _HelperMainScreenState extends State<HelperMainScreen> {
               const SizedBox(
                 height: 22,
               ),
-              SizedBox(width: 352, height: 500, child: _reservationBoxes()),
+              SizedBox(width: 352, height: 514, child: _reservationBoxes()),
             ],
           ),
         ),

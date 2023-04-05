@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SafeArea(
         child: Scaffold(
-          backgroundColor: MyColors.white,
+          backgroundColor: Color.fromRGBO(255, 255, 255, 1),
           body: HelperHelpeeSelectScreen(),
         ),
       ),

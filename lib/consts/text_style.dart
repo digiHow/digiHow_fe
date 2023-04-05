@@ -30,6 +30,13 @@ class MyTextStyle {
     decoration: TextDecoration.none,
   );
 
+  static const TextStyle CbS24W700 = TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.w700,
+    color: MyColors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const TextStyle CbS32W700 = TextStyle(
     fontSize: 32.0,
     fontWeight: FontWeight.w700,

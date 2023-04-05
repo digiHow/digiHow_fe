@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digi_how/consts/text_style.dart';
-import 'package:digi_how/screens/helpee/helpee_webrtc_screen.dart';
+import 'package:digi_how/screens/helpee/helpee_alert_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -112,7 +112,7 @@ class _MatchingLoadState extends State<MatchingLoad> {
         ),
         GestureDetector(
           onTap: () {
-            Get.to(const HelpeeWebrtcScreen());
+            Get.to(HelpeeAlertScreen());
           },
           child: Padding(
             padding: const EdgeInsets.only(
